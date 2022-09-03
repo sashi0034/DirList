@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -12,6 +13,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace DirList.Views
 {
@@ -24,7 +26,7 @@ namespace DirList.Views
         {
             InitializeComponent();
 
-            Dir = new DirPath("C:\\dev");
+            Dir = new DirPath("C:\\");
         }
 
         public DirPath Dir
@@ -44,6 +46,35 @@ namespace DirList.Views
             buttonDelete.Click += e;
         }
 
+        private string getNameOfProgramToOpen()
+        {
+            return @"code";
+            //return "explorer.exe";
+        }
 
+        private void buttonDir_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            ProcessStartInfo processStartInfo = new ProcessStartInfo
+            {
+                UseShellExecute = true,  // IMPORTANT: This makes it work, sorta
+                FileName = getNameOfProgramToOpen(),
+                Arguments = Dir.Path,
+                WindowStyle = ProcessWindowStyle.Hidden
+            };
+
+            try
+            {
+                Process.Start(processStartInfo);
+            }catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+            
+        }
+
+        private void buttonCopyToClipboard_Click(object sender, RoutedEventArgs e)
+        {
+            Clipboard.SetText(Dir.Path);
+        }
     }
 }
