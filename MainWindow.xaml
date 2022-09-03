@@ -37,9 +37,7 @@
                 </Grid.ColumnDefinitions>
 
                 <Grid Grid.Column="0">
-                    <views:DirPathInput/>
-
-
+                    <views:DirPathInput OnConfirm="dirPathInput_onConfirm"/>
                 </Grid>
                 
             </Grid>

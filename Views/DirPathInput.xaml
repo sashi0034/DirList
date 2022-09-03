@@ -5,6 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:DirList.Views"
              mc:Ignorable="d" 
+             Keyboard.KeyDown="onKeyDown"
              d:DesignHeight="100" d:DesignWidth="400">
     <UserControl.Resources>
         <ResourceDictionary>
@@ -26,7 +27,8 @@
                 <TextBox 
                     Grid.Row="1" x:Name="inputDirPath" Grid.Column="0" Margin="5 0" Height="30" VerticalContentAlignment="Center" 
                     Foreground="White" Background="{StaticResource DrakDark}" BorderBrush="{StaticResource LightDark}"
-                    Text="C:\example" Padding="25 0 0 0"
+                    TextChanged="inputDirPath_TextChanged"
+                    Text="" Padding="25 0 0 0"
                     />
                 <Label Content="📂" Foreground="#fd7" Padding="10" Width="Auto" IsHitTestVisible="False"/>
             </Grid>

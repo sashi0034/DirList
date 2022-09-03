@@ -37,7 +37,9 @@ namespace DirList.Views
         {
             InitializeComponent();
         }
+
         private CancellationTokenSource? _cancellationOldTaskRef = null;
+
         public void ShowMessage(InfoLabelMessage message)
         {
             _cancellationOldTaskRef?.Cancel();
