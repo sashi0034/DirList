@@ -13,20 +13,23 @@
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </UserControl.Resources>
-    <Grid Background="#2a2a32" Margin="5">
+    <Grid Background="#2a2a32" Margin="2">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="Auto"/>
             <ColumnDefinition Width="Auto"/>
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
-        <Button Grid.Column="0" x:Name="buttonDelete" Style="{StaticResource SmallSquareButton}" 
-                                Content="❎" HorizontalContentAlignment="Center" BorderBrush="{StaticResource DarkPaleBlue}" Background="#337" Margin="5"
-                                />
-        <Button Grid.Column="1" x:Name="b2uttonDelete" Style="{StaticResource SmallSquareButton}"
-                                Content="🗒️" HorizontalContentAlignment="Center" BorderBrush="{StaticResource DarkPaleBlue}" Background="#472" Margin="5"
-                                />
-        <Button Grid.Column="2" x:Name="buttonDir" Style="{StaticResource FlatButton}" 
-                                Content="C:\example" HorizontalContentAlignment="Left" BorderBrush="{StaticResource DarkPaleBlue}" Background="{StaticResource LightDark}" Padding="15 5" Margin="5"
-                                />
+        <Button 
+            Grid.Column="0" x:Name="buttonDelete" Style="{StaticResource SmallSquareButton}" 
+            Content="❎" HorizontalContentAlignment="Center" BorderBrush="{StaticResource DarkPaleBlue}" Background="#337" Margin="5"
+            />
+        <Button 
+            Grid.Column="1" x:Name="b2uttonDelete" Style="{StaticResource SmallSquareButton}"
+            Content="🗒️" HorizontalContentAlignment="Center" BorderBrush="{StaticResource DarkPaleBlue}" Background="#472" Margin="5"
+            />
+        <Button 
+            Grid.Column="2" x:Name="buttonDir" Style="{StaticResource FlatButton}" 
+            Content="C:\example" HorizontalContentAlignment="Left" BorderBrush="{StaticResource DarkPaleBlue}" Background="{StaticResource LightDark}" Padding="15 5" Margin="5"
+            />
     </Grid>
 </UserControl>
