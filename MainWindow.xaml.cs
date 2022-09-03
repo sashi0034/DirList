@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DirList.Views;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -23,6 +24,17 @@ namespace DirList
         public MainWindow()
         {
             InitializeComponent();
+        }
+
+        private void buttonAdd_Click(object sender, RoutedEventArgs e)
+        {
+            var dirLine = new DirLineElement();
+            dirLine.Dir = new DirPath("C:\\test\\directory");
+            dirLine.AddEventOnPushDelete((_, _) =>
+            {
+                panelDirList.Children.Remove(dirLine);
+            });
+            panelDirList.Children.Add(dirLine);
         }
     }
 }

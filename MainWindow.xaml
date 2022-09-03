@@ -23,12 +23,15 @@
             <Border BorderThickness="1"  BorderBrush="AliceBlue"/>
 
             <ScrollViewer Background="{StaticResource DrakDark}">
-                <StackPanel>
-                    <views:DirLineElement/>
+                <StackPanel x:Name="panelDirList">
+                    <!--<views:DirLineElement/>-->
                 </StackPanel>
             </ScrollViewer>
         </Grid>
-        
+
+        <Grid Grid.Row="1" Margin="10">
+            <Button x:Name="buttonAdd" Style="{StaticResource FlatButton}" Background="{StaticResource LightDark}" Click="buttonAdd_Click"/>
+        </Grid>
 
     </Grid>
 </Window>

@@ -37,7 +37,13 @@ namespace DirList.Views
             {
                 buttonDir.Content = value.Path;
             }
-        } 
+        }
+
+        public void AddEventOnPushDelete(RoutedEventHandler e)
+        {
+            buttonDelete.Click += e;
+        }
+
 
     }
 }

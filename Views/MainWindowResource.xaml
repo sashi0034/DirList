@@ -3,6 +3,7 @@
     <Brush x:Key="NormalDark">#333</Brush>
     <Brush x:Key="LightDark">#444</Brush>
     <Brush x:Key="DrakDark">#222</Brush>
+    <Brush x:Key="DarkPaleBlue">#557</Brush>
 
     <ControlTemplate x:Key="RoundButtonTemplate"
                          TargetType="Button">
@@ -31,6 +32,11 @@
     <Style TargetType="Button" x:Key="FlatButton">
         <Setter Property="Foreground" Value="#fff"/>
         <Setter Property="Template" Value="{StaticResource RoundButtonTemplate}"/>
+    </Style>
+
+    <Style TargetType="Button" x:Key="SmallSquareButton" BasedOn="{StaticResource FlatButton}">
+        <Setter Property="Width" Value="30"/>
+        <Setter Property="Height" Value="30"/>
     </Style>
 
     <Style TargetType="Button" x:Key="CommandButton">
