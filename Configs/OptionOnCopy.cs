@@ -27,7 +27,7 @@ namespace DirList.Configs
             view.ResetComboItem(descriptionList);
             _view = view;
         }
-        public OptionOnCopyKind Selected => _view.SelectedIndex<OptionOnCopyKind>();
+        public OptionOnCopyKind Selected => _view.GetSelectedIndex<OptionOnCopyKind>();
 
         public string GetFormatedPath(IDirPath dir)
         {

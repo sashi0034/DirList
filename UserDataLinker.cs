@@ -1,4 +1,5 @@
-﻿using DirList.Views;
+﻿using DirList.Configs;
+using DirList.Views;
 using System;
 using System.Windows.Controls;
 
@@ -14,13 +15,16 @@ namespace DirList
 		private readonly MainWindowInfo _windowRef;
 		private readonly UserData _userData;
 
-		public UserDataLinker()
+		private event Action onSave;
+        private event Action onLoad;
+
+        public UserDataLinker()
 		{}
 
 		public static UserDataLinker LoadUserData(MainWindowInfo mainWindowRef)
 		{
 			var result = new UserDataLinker(mainWindowRef);
-			result.load();
+			result.onLoad();
 			return result;
 		}
 
@@ -30,28 +34,43 @@ namespace DirList
             _windowRef = mainWindowRef;
             _userData = UserData.ReadFromFile();
             if (_userData == null) _userData = new UserData();
+
+			init();
         }
 
 
         public void SaveUserData()
 		{
-			save();
+			onSave();
 
 			_userData.WriteSelf();
 		}
 
-        private void load()
+        private void init()
         {
-            foreach (var dir in _userData.DirPathList)
-            {
-                _windowRef.DirListPanel.AddDir(_windowRef.ConfigRecord, dir);
-            }
-        }
+            // DirListPanel
+            onLoad += () =>
+			{
+				foreach (var dir in _userData.DirPathList)
+				{
+					_windowRef.DirListPanel.AddDir(_windowRef.ConfigRecord, dir);
+				}
+			};
+			onSave += () =>
+			{
+				_userData.DirPathList = _windowRef.DirListPanel.GetDirList();
+			};
 
-        private void save()
-		{
-			_userData.DirPathList = _windowRef.DirListPanel.GetDirList();
-		}
+			// DirListSortKind
+			onLoad += () =>
+			{
+				_windowRef.ConfigRecord.DirListSort.Selected = _userData.SortKind;
+			};
+			onSave += () =>
+			{
+				_userData.SortKind = _windowRef.ConfigRecord.DirListSort.Selected;
+			};
+        }
 	}
 
 

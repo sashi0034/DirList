@@ -25,6 +25,9 @@
 
         <Grid Grid.Row="0">
             <TextBlock Margin="10 5" Text="フォルダを追加したら、ダブルクリックで開けます。"/>
+            <Grid HorizontalAlignment="Right" Width="150" Margin="10 2">
+                <views:ConfigComboBox x:Name="viewDirlistSort" TextVisibility="Collapsed"/>
+            </Grid>
         </Grid>
 
         <Grid Grid.Row="1" Margin="10 0">

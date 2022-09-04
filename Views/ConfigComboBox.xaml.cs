@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -27,6 +28,18 @@ namespace DirList.Views
             combo.SelectedIndex = 0;
         }
 
+        public Visibility TextVisibility
+        {
+            get
+            {
+                return text.Visibility;
+            }
+            set
+            {
+                text.Visibility = value;
+            }
+        }
+
         public string Text
         {
             get
@@ -47,21 +60,19 @@ namespace DirList.Views
                 combo.Items.Add(item);
         }
 
-        //public IEnumerable Source
-        //{
-        //    get
-        //    {
-        //        return combo.ItemsSource;
-        //    }
-        //    set
-        //    {
-        //        combo.ItemsSource = value;
-        //    }
-        //}
-
-        public T SelectedIndex<T>() where T : Enum
+        public T GetSelectedIndex<T>() where T : Enum
         {
             return (T)(Object)combo.SelectedIndex;
+        }
+        public void SetSelectedIndex<T>(T kind) where T : Enum
+        {
+            combo.SelectedIndex = (int)(Object)kind;
+        }
+
+
+        public void AddEventOnSelect(SelectionChangedEventHandler action)
+        {
+            combo.SelectionChanged += action;
         }
     }
 }

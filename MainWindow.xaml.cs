@@ -33,7 +33,8 @@ namespace DirList
 
             _configRecord = new ConfigRecord(
                 new OptionOnCopy(viewOptionOnCopy),
-                new ProgramForOpen(viewProgramForOpen)
+                new ProgramForOpen(viewProgramForOpen),
+                new DirListSort(viewDirlistSort, dirListPanel)
                 );
 
             

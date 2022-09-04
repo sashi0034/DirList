@@ -14,6 +14,7 @@ namespace DirList
     {
         public UserData() { }
         public List<DirPath> DirPathList { get; set; } = new();
+        public Configs.DirListSortKind SortKind { get; set; }
 
 
         private const string DataPath = @"UserData.xml";

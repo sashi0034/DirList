@@ -6,9 +6,11 @@ using System.Threading.Tasks;
 
 namespace DirList.Configs
 {
+
     public record ConfigRecord(
         OptionOnCopy OptionOnCopy,
-        ProgramForOpen ProgramForOpen
+        ProgramForOpen ProgramForOpen,
+        DirListSort DirListSort
         )
     {}
 }

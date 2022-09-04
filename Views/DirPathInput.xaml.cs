@@ -34,7 +34,9 @@ namespace DirList.Views
         private void inputDirPath_TextChanged(object sender, TextChangedEventArgs e)
         {
             if (info == null) return;
-            
+
+            inputDirPath.Text = inputDirPath.Text.Replace("\"", "");
+
             var message = isValidInput() ?
                 new InfoLabelMessage($"{_keyNameOfConfirm}で追加します。", Brushes.White) :
                 new InfoLabelMessage("存在しないパスです。", Brushes.LightPink);

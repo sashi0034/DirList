@@ -31,7 +31,7 @@ namespace DirList.Configs
             view.ResetComboItem(descriptionList);
             _view = view;
         }
-        public ProgramForOpenKind Selected => _view.SelectedIndex<ProgramForOpenKind>();
+        public ProgramForOpenKind Selected => _view.GetSelectedIndex<ProgramForOpenKind>();
 
         public ProgramForOpenProcessStartInfo GetInfoToExecute()
         {

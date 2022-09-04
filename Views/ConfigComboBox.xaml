@@ -14,10 +14,16 @@
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </UserControl.Resources>
-    <UniformGrid Rows="2">
-        <TextBlock x:Name="text" Text="(example)" VerticalAlignment="Center"/>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="1*"/>
+        </Grid.RowDefinitions>
+        
+        <TextBlock Grid.Row="0" x:Name="text" Text="(example)" VerticalAlignment="Center"/>
         <ComboBox 
+            Grid.Row="1"
             Style="{StaticResource DarkComboBox}" x:Name="combo"
             />
-    </UniformGrid>
+    </Grid>
 </UserControl>

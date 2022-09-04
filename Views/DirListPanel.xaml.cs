@@ -38,6 +38,34 @@ namespace DirList.Views
             panel.Children.Add(dirLine);
         }
 
+        public void SortBy(Action<List<DirLineElement>> sortMethod)
+        {
+            var lineList = new List<DirLineElement>();
+
+            // 子要素を取得
+            foreach (var child in panel.Children)
+            {
+                var line = child as DirLineElement;
+                if (line == null) continue;
+                lineList.Add(line);
+            }
+
+            // 取り除く
+            foreach (var line in lineList)
+            {
+                panel.Children.Remove(line);
+            }
+
+            sortMethod(lineList);
+
+            // 戻す
+            for (int i=0; i<lineList.Count; ++i)
+            {
+                panel.Children.Add(lineList[i]);
+            }
+        }
+
+
         public List<DirPath> GetDirList()
         {
             var list = new List<DirPath>();
