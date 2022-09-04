@@ -57,7 +57,7 @@ namespace DirList.Views
             if (e.Key != _keyOfConfrim) return;
             if (!isValidInput()) return;
 
-            OnConfirm(new DirPath(inputDirPath.Text));
+            OnConfirm(DirPath.PushNew(inputDirPath.Text));
             inputDirPath.Text = "";
 
             const int visibleDuration = 1000 * 2;

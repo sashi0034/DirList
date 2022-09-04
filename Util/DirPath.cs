@@ -6,14 +6,36 @@ using System.Threading.Tasks;
 
 namespace DirList.Util
 {
-    public struct DirPath
+    public interface IDirPath
     {
-        private string _path;
-        public string Path => _path;
+        string Path { get;}
+        string PushedTime { get; }
+    }
+        
 
-        public DirPath(string path)
+    [Serializable]
+    public class DirPath : IDirPath
+    {
+        public string Path { get; set; } = "";
+        public string PushedTime { get; set; } = "";
+        public bool HasPushedTime => PushedTime != "";
+
+        public DirPath()
+        {}
+
+        public static DirPath CreateWithoutPushedTime(string path)
         {
-            _path = path;
+            var result = new DirPath();
+            result.Path = path;
+            return result;
+        }
+
+        public static DirPath PushNew(string path)
+        {
+            var result = new DirPath();
+            result.Path = path;
+            result.PushedTime = DateTime.Now.ToString();
+            return result;
         }
 
 

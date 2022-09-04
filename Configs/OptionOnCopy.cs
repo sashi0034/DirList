@@ -29,7 +29,7 @@ namespace DirList.Configs
         }
         public OptionOnCopyKind Selected => _view.SelectedIndex<OptionOnCopyKind>();
 
-        public string GetFormatedPath(DirPath dir)
+        public string GetFormatedPath(IDirPath dir)
         {
             var baseText = dir.Path;
 

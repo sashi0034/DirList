@@ -31,18 +31,21 @@ namespace DirList.Views
 
             InitializeComponent();
 
-            Dir = new DirPath("C:\\");
+            Dir = DirPath.CreateWithoutPushedTime("C:\\");
         }
 
+        // TODO: 切り分け
+        private DirPath _dir;
         public DirPath Dir
         {
             get
             {
-                return new DirPath(buttonDir.Content as string);
+                return _dir;
             }
             set
             {
                 buttonDir.Content = value.Path;
+                _dir = value;
             }
         }
 

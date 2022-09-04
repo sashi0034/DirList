@@ -25,6 +25,7 @@ namespace DirList
     public partial class MainWindow : Window
     {
         private readonly ConfigRecord _configRecord;
+        private readonly UserDataLinker _userDataLinker;
 
         public MainWindow()
         {
@@ -34,18 +35,20 @@ namespace DirList
                 new OptionOnCopy(viewOptionOnCopy),
                 new ProgramForOpen(viewProgramForOpen)
                 );
+
+            
+            _userDataLinker = UserDataLinker.LoadUserData(new MainWindowInfo(_configRecord, dirListPanel));
         }
 
 
         private void dirPathInput_onConfirm(DirPath path)
         {
-            var dirLine = new DirLineElement(_configRecord);
-            dirLine.Dir = path;
-            dirLine.AddEventOnPushDelete((_, _) =>
-            {
-                panelDirList.Children.Remove(dirLine);
-            });
-            panelDirList.Children.Add(dirLine);
+            dirListPanel.AddDir(_configRecord, path);
+        }
+
+        private void window_Closed(object sender, EventArgs e)
+        {
+            _userDataLinker.SaveUserData();
         }
     }
 }
