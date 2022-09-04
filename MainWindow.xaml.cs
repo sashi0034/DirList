@@ -1,4 +1,6 @@
-﻿using DirList.Views;
+﻿using DirList.Configs;
+using DirList.Util;
+using DirList.Views;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -22,15 +24,22 @@ namespace DirList
     /// </summary>
     public partial class MainWindow : Window
     {
+        private readonly ConfigRecord _configRecord;
+
         public MainWindow()
         {
             InitializeComponent();
+
+            _configRecord = new ConfigRecord(
+                new OptionOnCopy(viewOptionOnCopy),
+                new ProgramForOpen(viewProgramForOpen)
+                );
         }
 
 
         private void dirPathInput_onConfirm(DirPath path)
         {
-            var dirLine = new DirLineElement();
+            var dirLine = new DirLineElement(_configRecord);
             dirLine.Dir = path;
             dirLine.AddEventOnPushDelete((_, _) =>
             {

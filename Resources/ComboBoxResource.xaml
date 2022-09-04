@@ -4,7 +4,7 @@
     <ResourceDictionary.MergedDictionaries>
         <ResourceDictionary Source="./MainWindowResource.xaml"/>
     </ResourceDictionary.MergedDictionaries>
-    
+
     <Style x:Key="DarkComboBox" TargetType="{x:Type ComboBox}">
         <Setter Property="Foreground" Value="White"/>
         <Setter Property="Height" Value="30"/>
@@ -37,7 +37,7 @@
                         </ToggleButton>
                         <ContentPresenter 
                             Name="contentSite" IsHitTestVisible="False"  Content="{TemplateBinding SelectionBoxItem}" ContentTemplate="{TemplateBinding SelectionBoxItemTemplate}" ContentTemplateSelector="{TemplateBinding ItemTemplateSelector}" 
-                            Margin="4" VerticalAlignment="Center" 
+                            Margin="10 0 0 0" VerticalAlignment="Center" 
                             />
                         <TextBox x:Name="partEditableTextBox" Visibility="Hidden" IsReadOnly="{TemplateBinding IsReadOnly}"/>
                         <Popup Name="Popup" Placement="Bottom" IsOpen="{TemplateBinding IsDropDownOpen}" AllowsTransparency="True"  Focusable="False" PopupAnimation="Slide">

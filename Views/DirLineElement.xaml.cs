@@ -13,6 +13,8 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using DirList.Configs;
+using DirList.Util;
 using static System.Net.Mime.MediaTypeNames;
 
 namespace DirList.Views
@@ -22,8 +24,11 @@ namespace DirList.Views
     /// </summary>
     public partial class DirLineElement : UserControl
     {
-        public DirLineElement()
+        private readonly ConfigRecord _configRecord;
+        public DirLineElement(ConfigRecord config)
         {
+            _configRecord = config;
+
             InitializeComponent();
 
             Dir = new DirPath("C:\\");
@@ -46,18 +51,15 @@ namespace DirList.Views
             buttonDelete.Click += e;
         }
 
-        private string getNameOfProgramToOpen()
-        {
-            return @"code";
-            //return "explorer.exe";
-        }
 
         private void buttonDir_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
+            var configInfo = _configRecord.ProgramForOpen.GetInfoToExecute();
+
             ProcessStartInfo processStartInfo = new ProcessStartInfo
             {
-                UseShellExecute = true,  // IMPORTANT: This makes it work, sorta
-                FileName = getNameOfProgramToOpen(),
+                UseShellExecute = configInfo.UseShellExecute,
+                FileName = configInfo.FileName,
                 Arguments = Dir.Path,
                 WindowStyle = ProcessWindowStyle.Hidden
             };
@@ -74,7 +76,8 @@ namespace DirList.Views
 
         private void buttonCopyToClipboard_Click(object sender, RoutedEventArgs e)
         {
-            Clipboard.SetText(Dir.Path);
+            Clipboard.SetText(_configRecord.OptionOnCopy.GetFormatedPath(Dir));
         }
+
     }
 }

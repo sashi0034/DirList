@@ -4,6 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:views="clr-namespace:DirList.Views"
+        xmlns:configs="clr-namespace:DirList.Configs"
         mc:Ignorable="d"
         Title="Dir List" Height="450" Width="800">
     <Window.Resources>
@@ -43,20 +44,8 @@
 
                 <Grid Grid.Column="1" Margin="10 0 0 0">
                     <UniformGrid Rows="2">
-                        <UniformGrid Rows="2">
-                            <TextBlock Text="コピーオプション"/>
-                            <ComboBox Style="{StaticResource DarkComboBox}">
-                                <ComboBoxItem Content="通常"/>
-                                <ComboBoxItem Content="wslpath として"/>
-                            </ComboBox>
-                        </UniformGrid>
-                        <UniformGrid Rows="2">
-                            <TextBlock Text="フォルダの開け方"/>
-                            <ComboBox Style="{StaticResource DarkComboBox}">
-                                <ComboBoxItem Content="Explorer"/>
-                                <ComboBoxItem Content="Visual Studio Code"/>
-                            </ComboBox>
-                        </UniformGrid>
+                        <views:ConfigComboBox x:Name="viewOptionOnCopy" Text="コピーオプション"/>
+                        <views:ConfigComboBox x:Name="viewProgramForOpen" Text="フォルダの開け方"/>
                     </UniformGrid>
                 </Grid>
                 
