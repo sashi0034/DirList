@@ -60,9 +60,17 @@ namespace DirList.Views
                 combo.Items.Add(item);
         }
 
+        public int GetSelectedIndex()
+        {
+            return combo.SelectedIndex;
+        }
         public T GetSelectedIndex<T>() where T : Enum
         {
             return (T)(Object)combo.SelectedIndex;
+        }
+        public void SetSelectedIndex(int index)
+        {
+            combo.SelectedIndex = index;
         }
         public void SetSelectedIndex<T>(T kind) where T : Enum
         {

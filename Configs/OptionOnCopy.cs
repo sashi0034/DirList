@@ -36,9 +36,9 @@ namespace DirList.Configs
             switch (Selected)
             {
                 case OptionOnCopyKind.WslPathCommand:
-                    return $"wslpath -u {baseText}";
+                    return $"wslpath -u '{baseText}'";
                 case OptionOnCopyKind.WslPathAsString:
-                    return $"$(wslpath -u {baseText})";
+                    return $"$(wslpath -u '{baseText}')";
                 default:
                     return baseText;
             }

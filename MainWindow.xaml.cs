@@ -34,8 +34,9 @@ namespace DirList
             _configRecord = new ConfigRecord(
                 new OptionOnCopy(viewOptionOnCopy),
                 new ProgramForOpen(viewProgramForOpen),
-                new DirListSort(viewDirlistSort, dirListPanel)
-                );
+                new DirListSort(viewDirlistSort, dirListPanel),
+                new CurrentDataInstance(dataInstanceView, dirListPanel)
+                ); ;
 
             
             _userDataLinker = UserDataLinker.LoadUserData(new MainWindowInfo(_configRecord, dirListPanel));

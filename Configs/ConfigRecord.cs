@@ -10,7 +10,8 @@ namespace DirList.Configs
     public record ConfigRecord(
         OptionOnCopy OptionOnCopy,
         ProgramForOpen ProgramForOpen,
-        DirListSort DirListSort
+        DirListSort DirListSort,
+        CurrentDataInstance CurrentDataInstance
         )
     {}
 }
