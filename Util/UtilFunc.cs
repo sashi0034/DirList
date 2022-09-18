@@ -5,6 +5,7 @@ using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 
 namespace DirList.Util
 {
@@ -25,6 +26,12 @@ namespace DirList.Util
                .Cast<T>()
                .Select(value => value.GetEnumDescription())
                .ToList();
+        }
+
+        public static void SetWindowLeftTopTo(this Window child, Window parent)
+        {
+            child.Left = parent.Left;
+            child.Top = parent.Top;
         }
         
     }

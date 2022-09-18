@@ -1,5 +1,4 @@
 ﻿using DirList.Configs;
-using DirList.Util;
 using DirList.Views;
 using System;
 using System.Collections.Generic;
@@ -35,8 +34,8 @@ namespace DirList
                 new OptionOnCopy(viewOptionOnCopy),
                 new ProgramForOpen(viewProgramForOpen),
                 new DirListSort(viewDirlistSort, dirListPanel),
-                new CurrentDataInstance(dataInstanceView, dirListPanel)
-                ); ;
+                new DirListDataInstanceConfig(dataInstanceView, dirListPanel)
+                );
 
             dirListPanel.RegisterConfig(_configRecord);
 

@@ -1,5 +1,4 @@
-﻿using DirList.Util;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
@@ -13,7 +12,7 @@ namespace DirList
     public class UserData
     {
         public UserData() { }
-        public List<DirPath> DirPathList { get; set; } = new();
+        public List<DirListDataInstance> DataInstanceList { get; set; } = new();
         public Configs.DirListSortKind SortKind { get; set; }
 
 

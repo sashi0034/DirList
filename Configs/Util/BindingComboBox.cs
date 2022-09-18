@@ -23,6 +23,14 @@ namespace DirList.Configs.Util
             func(_itemList);
             _view.ResetComboItem(_itemList);
         }
+        public void ResetItemList(List<string> list)
+        {
+            UpdateItemList(before =>
+            {
+                before.Clear();
+                before.AddRange(list);
+            });
+        }
         public int Selected
         {
             get { return _view.GetSelectedIndex(); }

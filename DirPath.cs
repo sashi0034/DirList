@@ -4,14 +4,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DirList.Util
+namespace DirList
 {
     public interface IDirPath
     {
-        string Path { get;}
+        string Path { get; }
         string PushedTime { get; }
     }
-        
+
 
     [Serializable]
     public class DirPath : IDirPath
@@ -21,7 +21,7 @@ namespace DirList.Util
         public bool HasPushedTime => PushedTime != "";
 
         public DirPath()
-        {}
+        { }
 
         public static DirPath CreateWithoutPushedTime(string path)
         {

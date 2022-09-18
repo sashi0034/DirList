@@ -11,7 +11,7 @@ namespace DirList.Configs
         OptionOnCopy OptionOnCopy,
         ProgramForOpen ProgramForOpen,
         DirListSort DirListSort,
-        CurrentDataInstance CurrentDataInstance
+        DirListDataInstanceConfig DirListDataInstanceConfig
         )
     {}
 }

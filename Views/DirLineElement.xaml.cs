@@ -14,7 +14,6 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using DirList.Configs;
-using DirList.Util;
 using static System.Net.Mime.MediaTypeNames;
 
 namespace DirList.Views
