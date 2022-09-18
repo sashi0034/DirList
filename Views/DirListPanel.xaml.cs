@@ -46,9 +46,9 @@ namespace DirList.Views
 
         public void ResetBy(List<DirPath> newList)
         {
-            foreach (var oldChild in panel.Children)
+            for (int i=panel.Children.Count-1; i>=0; --i)
             {
-                var line = oldChild as DirLineElement;
+                var line = panel.Children[i] as DirLineElement;
                 if (line == null) continue;
                 panel.Children.Remove(line);
             }
