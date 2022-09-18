@@ -2,6 +2,7 @@
 using DirList.Util;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -26,16 +27,37 @@ namespace DirList.Views
         {
             InitializeComponent();
         }
-
-        public void AddDir(ConfigRecord configRecord, DirPath path)
+        private ConfigRecord _config;
+        public void RegisterConfig(ConfigRecord config)
         {
-            var dirLine = new DirLineElement(configRecord);
+            Debug.Assert(_config == null);
+            _config = config;
+        }
+
+        public void AddDir(DirPath path)
+        {
+            var dirLine = new DirLineElement(_config);
             dirLine.Dir = path;
             dirLine.AddEventOnPushDelete((_, _) =>
             {
                 panel.Children.Remove(dirLine);
             });
             panel.Children.Add(dirLine);
+        }
+
+        public void ResetBy(List<DirPath> newList)
+        {
+            foreach (var oldChild in panel.Children)
+            {
+                var line = oldChild as DirLineElement;
+                if (line == null) continue;
+                panel.Children.Remove(line);
+            }
+
+            foreach (var dirPathList in newList)
+            {
+                AddDir(dirPathList);
+            }
         }
 
         public void SortBy(Action<List<DirLineElement>> sortMethod)

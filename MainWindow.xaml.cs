@@ -38,14 +38,15 @@ namespace DirList
                 new CurrentDataInstance(dataInstanceView, dirListPanel)
                 ); ;
 
-            
+            dirListPanel.RegisterConfig(_configRecord);
+
             _userDataLinker = UserDataLinker.LoadUserData(new MainWindowInfo(_configRecord, dirListPanel));
         }
 
 
         private void dirPathInput_onConfirm(DirPath path)
         {
-            dirListPanel.AddDir(_configRecord, path);
+            dirListPanel.AddDir(path);
         }
 
         private void window_Closed(object sender, EventArgs e)

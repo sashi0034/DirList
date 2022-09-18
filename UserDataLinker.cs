@@ -51,11 +51,9 @@ namespace DirList
             // DirListPanel
             onLoad += () =>
 			{
-				foreach (var dir in _userData.DirPathList)
-				{
-					_windowRef.DirListPanel.AddDir(_windowRef.ConfigRecord, dir);
-				}
-			};
+				_windowRef.DirListPanel.ResetBy(_userData.DirPathList);
+
+            };
 			onSave += () =>
 			{
 				_userData.DirPathList = _windowRef.DirListPanel.GetDirList();

@@ -24,17 +24,17 @@
             </Grid>
 
             <Button 
-                    Width="50" Style="{StaticResource DarkFlatButto}" x:Name="buttonRemoveDataInstance" Margin="{StaticResource BaseMargin}"
+                    Width="50" Style="{StaticResource DarkFlatButton}" x:Name="buttonRemoveDataInstance" Margin="{StaticResource BaseMargin}"
                     Content="削除" 
                     Click="buttonRemoveDataInstance_Click"/>
 
             <Button 
-                    Width="100" Style="{StaticResource DarkFlatButto}" x:Name="buttonAddNewDataInstance" Margin="{StaticResource BaseMargin}"
+                    Width="100" Style="{StaticResource DarkFlatButton}" x:Name="buttonAddNewDataInstance" Margin="{StaticResource BaseMargin}"
                     Content="新規作成" 
                     Click="buttonAddNewDataInstance_Click"/>
 
             <Button 
-                    Width="100" Style="{StaticResource DarkFlatButto}" x:Name="buttonRenameDataInstance" Margin="{StaticResource BaseMargin}"
+                    Width="100" Style="{StaticResource DarkFlatButton}" x:Name="buttonRenameDataInstance" Margin="{StaticResource BaseMargin}"
                     Content="名前の変更" 
                     Click="buttonRenameDataInstance_Click"/>
 
