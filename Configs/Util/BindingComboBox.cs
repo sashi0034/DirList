@@ -20,8 +20,12 @@ namespace DirList.Configs.Util
 
         public void UpdateItemList(Action<List<String>> func)
         {
+            int selected = Selected;
+
             func(_itemList);
             _view.ResetComboItem(_itemList);
+
+            Selected = Math.Min(selected, _itemList.Count - 1);
         }
         public void ResetItemList(List<string> list)
         {

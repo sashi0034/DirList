@@ -19,9 +19,11 @@ namespace DirList.Views
     /// </summary>
     public partial class DataInstanceInputWindow : Window
     {
-        public DataInstanceInputWindow()
+        private Func<string, bool> _isValidInput;
+        public DataInstanceInputWindow(Func<string, bool> isValidInput)
         {
             InitializeComponent();
+            _isValidInput = isValidInput;
         }
 
         public bool IsConfirmed { get; private set; }
@@ -32,10 +34,32 @@ namespace DirList.Views
             set { inputBox.Text = value; }
         }
 
+        public void ShowBeforeName(string beforeName)
+        {
+            labelBeforeName.Text = "以前の名前: " + beforeName;
+            labelBeforeName.Visibility = Visibility.Visible;
+        }
+
         private void buttonConfirm_Click(object sender, RoutedEventArgs e)
         {
             IsConfirmed = true;
             Close();
+        }
+
+        private void inputBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            if (_isValidInput(InputText))
+            {
+                buttonConfirm.IsEnabled = true;
+                buttonConfirm.Opacity = 1.0;
+                infoLabel.HideMeddage();
+            }
+            else
+            {
+                buttonConfirm.IsEnabled = false;
+                buttonConfirm.Opacity = 0.5;
+                infoLabel.ShowMessage(new InfoLabelMessage("他の名前にしてください。", Brushes.LightPink));
+            }
         }
     }
 }

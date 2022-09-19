@@ -40,6 +40,10 @@ namespace DirList.Views
 
         private CancellationTokenSource? _cancellationOldTaskRef = null;
 
+        /// <summary>
+        /// メッセージをラベルに表示
+        /// </summary>
+        /// <param name="message"></param>
         public void ShowMessage(InfoLabelMessage message)
         {
             _cancellationOldTaskRef?.Cancel();
@@ -50,6 +54,15 @@ namespace DirList.Views
 
             if (message.CanInvisible) makeInvisibleAsync(message.VisibleDuration);
         }
+        
+        /// <summary>
+        /// 非表示にする
+        /// </summary>
+        public void HideMeddage()
+        {
+            label.Visibility = Visibility.Hidden;
+        }
+
 
         private async void makeInvisibleAsync(int time)
         {

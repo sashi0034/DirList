@@ -37,7 +37,7 @@ namespace DirList.Configs
         private void initDefaultInstance()
         {
             var defaultData = new List<DirListDataInstance>();
-            defaultData.Add(new DirListDataInstance("Instance 1"));
+            defaultData.Add(new DirListDataInstance(getDefaultInstanceName(1)));
             ResetDataInstanceList(defaultData);
         }
 
@@ -65,11 +65,19 @@ namespace DirList.Configs
             _oldSelectedIndex = index;
         }
 
+        /// <summary>
+        /// ビューのパネルに現在選択しているインスタンスを反映
+        /// </summary>
+
         public void WriteToPanel()
         {
             if (_instanceItemList.Selected == -1) return;
             _dirListPanel.ResetBy(DataInstanceList[_instanceItemList.Selected].DirPathList);
         }
+
+        /// <summary>
+        /// ビューのパネルの内容を読み取り、現在のインスタンスの情報として格納
+        /// </summary>
         public void ReadFromPanel()
         {
             readFromPanel(_instanceItemList.Selected);
@@ -82,9 +90,10 @@ namespace DirList.Configs
 
         private void onPushAddNewInstance()
         {
-            var inputWIndow = new Views.DataInstanceInputWindow();
+            var inputWIndow = new Views.DataInstanceInputWindow(isValidInput);
             inputWIndow.Owner = parentWIndow;
             inputWIndow.SetWindowLeftTopTo(parentWIndow);
+            inputWIndow.InputText = getDefaultInstanceName(_instanceItemList.ItemList.Count + 1);
             inputWIndow.ShowDialog();
 
             if (!inputWIndow.IsConfirmed) return;
@@ -94,6 +103,18 @@ namespace DirList.Configs
             forceChangeSelect(DataInstanceList.Count-1);
         }
 
+        private bool isValidInput(string input)
+        {
+            return 
+                input!="" &&
+                _instanceItemList.ItemList.Contains(input) == false;
+        }
+
+        private string getDefaultInstanceName(int id)
+        {
+            return "Instance " + id;
+        }
+
         private void removeInstance()
         {
 
@@ -101,7 +122,19 @@ namespace DirList.Configs
 
         private void renameInstance()
         {
+            int selectedIndex = _instanceItemList.Selected;
+            string oldName = _instanceItemList.ItemList[selectedIndex];
+            var inputWIndow = new Views.DataInstanceInputWindow(newName => { return newName == oldName || isValidInput(newName); });
+            inputWIndow.Owner = parentWIndow;
+            inputWIndow.SetWindowLeftTopTo(parentWIndow);
+            inputWIndow.InputText = oldName;
+            inputWIndow.ShowBeforeName(oldName);
+            inputWIndow.ShowDialog();
 
+
+            if (!inputWIndow.IsConfirmed) return;
+
+            renameDataInstance(selectedIndex, inputWIndow.InputText);
         }
 
         private void resetDataInstance(List<DirListDataInstance> dataInstanceList)
@@ -117,6 +150,12 @@ namespace DirList.Configs
         {
             DataInstanceList.Add(new DirListDataInstance(newInstanceName));
             _instanceItemList.UpdateItemList(list => list.Add(newInstanceName));
+        }
+
+        private void renameDataInstance(int selectedIndex, string newName)
+        {
+            DataInstanceList[selectedIndex].InstanceName = newName;
+            _instanceItemList.UpdateItemList(list => list[selectedIndex] = newName);
         }
 
     }
