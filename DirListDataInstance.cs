@@ -8,8 +8,8 @@ namespace DirList
 {
     public class DirListDataInstance
     {
-        public List<DirPath> DirPathList { get; set; } = new();
         public string InstanceName { get; set; } = "";
+        public List<DirPath> DirPathList { get; set; } = new();
 
         public DirListDataInstance() { }
 

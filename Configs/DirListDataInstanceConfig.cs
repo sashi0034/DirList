@@ -57,13 +57,14 @@ namespace DirList.Configs
         {
             if (dataInstanceList.Count == 0) return;
 
+            _oldSelectedIndex = -1;
             resetDataInstance(dataInstanceList);
-            forceChangeSelect(index);
+            changeSelect(index);
         }
 
-        private void forceChangeSelect(int index)
+        private void changeSelect(int index)
         {
-            _instanceItemList.Selected = index;
+            _instanceItemList.ChangeSelected(index);
             WriteToPanel();
         }
 
@@ -102,7 +103,7 @@ namespace DirList.Configs
 
             var newInstanceName = inputWIndow.InputText;
             addNewDataInstance(newInstanceName);
-            forceChangeSelect(DataInstanceList.Count - 1);
+            changeSelect(DataInstanceList.Count - 1);
         }
 
         private bool isValidInput(string input)
@@ -129,7 +130,7 @@ namespace DirList.Configs
                 showAndConfirmRemoveDialog() != MessageBoxResult.OK) return;
 
             int selectedIndex = _instanceItemList.Selected;
-            if (selectedIndex == _instanceItemList.ItemList.Count - 1) _instanceItemList.Selected--;
+            if (selectedIndex == _instanceItemList.ItemList.Count - 1) _instanceItemList.ChangeSelected(_instanceItemList.Selected-1);
             removeInstance(selectedIndex);
         }
 

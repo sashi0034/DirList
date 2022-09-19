@@ -18,14 +18,14 @@ namespace DirList.Configs.Util
         }
         public IReadOnlyList<string> ItemList => _itemList;
 
-        public void UpdateItemList(Action<List<String>> func)
+        public void UpdateItemList(Action<List<string>> func)
         {
             int selected = Selected;
 
             func(_itemList);
             _view.ResetComboItem(_itemList);
 
-            Selected = Math.Min(selected, _itemList.Count - 1);
+            ChangeSelected(Math.Min(selected, _itemList.Count - 1));
         }
         public void ResetItemList(List<string> list)
         {
@@ -38,7 +38,10 @@ namespace DirList.Configs.Util
         public int Selected
         {
             get { return _view.GetSelectedIndex(); }
-            set { _view.SetSelectedIndex(value); }
+        }
+        public void ChangeSelected(int value)
+        {
+            _view.SetSelectedIndex(value);
         }
         public string CurrentSelectedItem => _itemList[Selected];
     }
