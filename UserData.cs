@@ -5,6 +5,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml;
 using System.Xml.Serialization;
 
 namespace DirList
@@ -13,6 +14,7 @@ namespace DirList
     {
         public UserData() { }
         public List<DirListDataInstance> DataInstanceList { get; set; } = new();
+        public int DataInstanceSelectedIndex { get; set; } = 0;
         public Configs.DirListSortKind SortKind { get; set; }
 
 
@@ -22,10 +24,16 @@ namespace DirList
         public void WriteSelf()
         {
             System.Xml.Serialization.XmlSerializer serializer = new System.Xml.Serialization.XmlSerializer(typeof(UserData));
-            
+
+            XmlWriterSettings xmlSettings = new XmlWriterSettings();
+            xmlSettings.Indent = true;
+            xmlSettings.IndentChars = ("\t");
+            xmlSettings.Encoding = new System.Text.UTF8Encoding(false);
+
             using (var sw = new System.IO.StreamWriter(DataPath, false, new System.Text.UTF8Encoding(false)))
+            using (var xmlWriter = XmlWriter.Create(sw, xmlSettings))
             {
-                serializer.Serialize(sw, this);
+                serializer.Serialize(xmlWriter, this);
             }
         }
         public static UserData? ReadFromFile()

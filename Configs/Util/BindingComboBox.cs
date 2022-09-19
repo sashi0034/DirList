@@ -40,5 +40,6 @@ namespace DirList.Configs.Util
             get { return _view.GetSelectedIndex(); }
             set { _view.SetSelectedIndex(value); }
         }
+        public string CurrentSelectedItem => _itemList[Selected];
     }
 }

@@ -51,12 +51,13 @@ namespace DirList
             // DirListPanel
             onLoad += () =>
 			{
-				_windowRef.ConfigRecord.DirListDataInstanceConfig.ResetDataInstanceList(_userData.DataInstanceList);
+				_windowRef.ConfigRecord.DirListDataInstanceConfig.ResetDataInstanceList(_userData.DataInstanceList, _userData.DataInstanceSelectedIndex);
             };
 			onSave += () => 
 			{
 				_windowRef.ConfigRecord.DirListDataInstanceConfig.ReadFromPanel();
                 _userData.DataInstanceList = _windowRef.ConfigRecord.DirListDataInstanceConfig.DataInstanceList;
+				_userData.DataInstanceSelectedIndex = _windowRef.ConfigRecord.DirListDataInstanceConfig.SelectedIndex;
             };
 
 			// DirListSortKind

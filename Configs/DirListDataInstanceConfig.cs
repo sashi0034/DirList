@@ -8,12 +8,14 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
 
 namespace DirList.Configs
 {
     public class DirListDataInstanceConfig
     {
         private readonly BindingComboBox _instanceItemList;
+        public int SelectedIndex => _instanceItemList.Selected;
         private readonly Views.DirListPanel _dirListPanel;
         public List<DirListDataInstance> DataInstanceList { get; private set; } = new();
 
@@ -30,15 +32,15 @@ namespace DirList.Configs
             view.ComboBox.AddEventOnSelect((_, _) => { onSelect(); });
 
             view.OnPushAdd += onPushAddNewInstance;
-            view.OnPushRemove += removeInstance;
-            view.OnPushRename += renameInstance;
+            view.OnPushRemove += onPushRemoveInstance;
+            view.OnPushRename += onPushRenameInstance;
         }
 
         private void initDefaultInstance()
         {
             var defaultData = new List<DirListDataInstance>();
-            defaultData.Add(new DirListDataInstance(getDefaultInstanceName(1)));
-            ResetDataInstanceList(defaultData);
+            defaultData.Add(new DirListDataInstance(getNextDefaultInstanceName()));
+            ResetDataInstanceList(defaultData, 0);
         }
 
         private void onSelect()
@@ -50,12 +52,12 @@ namespace DirList.Configs
             _oldSelectedIndex = newSelectedIndex;
         }
 
-        public void ResetDataInstanceList(List<DirListDataInstance> dataInstanceList)
+        public void ResetDataInstanceList(List<DirListDataInstance> dataInstanceList, int index)
         {
             if (dataInstanceList.Count == 0) return;
 
             resetDataInstance(dataInstanceList);
-            forceChangeSelect(0);
+            forceChangeSelect(index);
         }
 
         private void forceChangeSelect(int index)
@@ -93,7 +95,7 @@ namespace DirList.Configs
             var inputWIndow = new Views.DataInstanceInputWindow(isValidInput);
             inputWIndow.Owner = parentWIndow;
             inputWIndow.SetWindowLeftTopTo(parentWIndow);
-            inputWIndow.InputText = getDefaultInstanceName(_instanceItemList.ItemList.Count + 1);
+            inputWIndow.InputText = getNextDefaultInstanceName();
             inputWIndow.ShowDialog();
 
             if (!inputWIndow.IsConfirmed) return;
@@ -110,17 +112,46 @@ namespace DirList.Configs
                 _instanceItemList.ItemList.Contains(input) == false;
         }
 
-        private string getDefaultInstanceName(int id)
+        private string getNextDefaultInstanceName()
         {
-            return "Instance " + id;
+            return "Instance " + (_instanceItemList.ItemList.Count + 1);
         }
 
-        private void removeInstance()
+        private void onPushRemoveInstance()
         {
+            if (_instanceItemList.ItemList.Count == 1)
+            {
+                MessageBox.Show("これ以上削除することはできません", "警告", MessageBoxButton.OK, MessageBoxImage.Warning);
+                return;
+            }
 
+            if (!Keyboard.IsKeyDown(Key.LeftCtrl) &&
+                showAndConfirmRemoveDialog() != MessageBoxResult.OK) return;
+
+            int selectedIndex = _instanceItemList.Selected;
+            if (selectedIndex == _instanceItemList.ItemList.Count - 1) _instanceItemList.Selected--;
+            removeInstance(selectedIndex);
         }
 
-        private void renameInstance()
+        private void removeInstance(int selectedIndex)
+        {
+            DataInstanceList.RemoveAt(selectedIndex);
+            _instanceItemList.UpdateItemList(list => list.RemoveAt(selectedIndex));
+            ReadFromPanel();
+        }
+
+        private MessageBoxResult showAndConfirmRemoveDialog()
+        {
+            var result = MessageBox.Show(
+                _instanceItemList.CurrentSelectedItem + " を削除しますか?\n( Ctrlを押しながら`削除'を押すと、このダイアログをスキップします )",
+                "確認",
+                MessageBoxButton.OKCancel,
+                MessageBoxImage.Question, MessageBoxResult.Cancel);
+
+            return result;
+        }
+
+        private void onPushRenameInstance()
         {
             int selectedIndex = _instanceItemList.Selected;
             string oldName = _instanceItemList.ItemList[selectedIndex];
