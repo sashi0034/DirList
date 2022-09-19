@@ -3,6 +3,7 @@ using DirList.Configs.Util;
 using DirList.Util;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -47,7 +48,7 @@ namespace DirList.Configs
         {
             int newSelectedIndex = _instanceItemList.Selected;
             if (newSelectedIndex == -1) return;
-            if (newSelectedIndex != _oldSelectedIndex) readFromPanel(_oldSelectedIndex);
+            if (_oldSelectedIndex!=-1) readFromPanel(_oldSelectedIndex);
             WriteToPanel();
             _oldSelectedIndex = newSelectedIndex;
         }
@@ -64,7 +65,6 @@ namespace DirList.Configs
         {
             _instanceItemList.Selected = index;
             WriteToPanel();
-            _oldSelectedIndex = index;
         }
 
         /// <summary>
@@ -102,7 +102,7 @@ namespace DirList.Configs
 
             var newInstanceName = inputWIndow.InputText;
             addNewDataInstance(newInstanceName);
-            forceChangeSelect(DataInstanceList.Count-1);
+            forceChangeSelect(DataInstanceList.Count - 1);
         }
 
         private bool isValidInput(string input)
@@ -133,12 +133,6 @@ namespace DirList.Configs
             removeInstance(selectedIndex);
         }
 
-        private void removeInstance(int selectedIndex)
-        {
-            DataInstanceList.RemoveAt(selectedIndex);
-            _instanceItemList.UpdateItemList(list => list.RemoveAt(selectedIndex));
-            ReadFromPanel();
-        }
 
         private MessageBoxResult showAndConfirmRemoveDialog()
         {
@@ -187,6 +181,11 @@ namespace DirList.Configs
         {
             DataInstanceList[selectedIndex].InstanceName = newName;
             _instanceItemList.UpdateItemList(list => list[selectedIndex] = newName);
+        }
+        private void removeInstance(int selectedIndex)
+        {
+            DataInstanceList.RemoveAt(selectedIndex);
+            _instanceItemList.UpdateItemList(list => list.RemoveAt(selectedIndex));
         }
 
     }
