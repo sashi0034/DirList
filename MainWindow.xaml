@@ -17,7 +17,7 @@
         </ResourceDictionary>
     </Window.Resources>
     <Grid Background="{StaticResource NormalDark}">
-        <Grid Margin="{StaticResource BaseMargin}">
+        <Grid Margin="{StaticResource Margin_5_5}">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>

@@ -20,13 +20,13 @@
             <TextBlock Text="新しいインスタンスの名前を入力してください。" HorizontalAlignment="Center"/>
             <TextBlock x:Name="labelBeforeName" Visibility="Collapsed" HorizontalAlignment="Center"/>
             <TextBox 
-                x:Name="inputBox" Grid.Column="0" Margin="{StaticResource LargeMargin}" Width="200" Height="30" VerticalContentAlignment="Center" 
+                x:Name="inputBox" Grid.Column="0" Margin="{StaticResource Margin_10_10}" Width="200" Height="30" VerticalContentAlignment="Center" 
                 Foreground="White" Background="{StaticResource DrakDark}" BorderBrush="{StaticResource LightDark}"
                 Text="" Padding="5 0 0 0" TextChanged="inputBox_TextChanged"
             />
             <local:InfoLabel x:Name="infoLabel" HorizontalAlignment="Center"/>
             <Button 
-                Style="{StaticResource DarkNormalButton}" Width="100" Margin="{StaticResource LargeMargin}" Content="決定"
+                Style="{StaticResource DarkNormalButton}" Width="100" Margin="{StaticResource Margin_10_10}" Content="決定"
                 x:Name="buttonConfirm" Click="buttonConfirm_Click"
             />
         </StackPanel>

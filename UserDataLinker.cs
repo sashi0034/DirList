@@ -12,8 +12,8 @@ namespace DirList
 
 	public class UserDataLinker
 	{
-		private readonly MainWindowInfo _windowRef;
-		private readonly UserData _userData;
+		private readonly MainWindowInfo windowRef;
+		private readonly UserData userData;
 
 		private event Action onSave;
         private event Action onLoad;
@@ -31,9 +31,9 @@ namespace DirList
 
 		private UserDataLinker(MainWindowInfo mainWindowRef)
 		{
-            _windowRef = mainWindowRef;
-            _userData = UserData.ReadFromFile();
-            if (_userData == null) _userData = new UserData();
+            windowRef = mainWindowRef;
+            userData = UserData.ReadFromFile();
+            if (userData == null) userData = new UserData();
 
 			init();
         }
@@ -43,7 +43,7 @@ namespace DirList
 		{
 			onSave();
 
-			_userData.WriteSelf();
+			userData.WriteSelf();
 		}
 
         private void init()
@@ -51,23 +51,23 @@ namespace DirList
             // DirListPanel
             onLoad += () =>
 			{
-				_windowRef.ConfigRecord.DirListDataInstanceConfig.ResetDataInstanceList(_userData.DataInstanceList, _userData.DataInstanceSelectedIndex);
+				windowRef.ConfigRecord.DirListDataInstanceConfig.ResetDataInstanceList(userData.DataInstanceList, userData.DataInstanceSelectedIndex);
             };
 			onSave += () => 
 			{
-				_windowRef.ConfigRecord.DirListDataInstanceConfig.ReadFromPanel();
-                _userData.DataInstanceList = _windowRef.ConfigRecord.DirListDataInstanceConfig.DataInstanceList;
-				_userData.DataInstanceSelectedIndex = _windowRef.ConfigRecord.DirListDataInstanceConfig.SelectedIndex;
+				windowRef.ConfigRecord.DirListDataInstanceConfig.ReadFromPanel();
+                userData.DataInstanceList = windowRef.ConfigRecord.DirListDataInstanceConfig.DataInstanceList;
+				userData.DataInstanceSelectedIndex = windowRef.ConfigRecord.DirListDataInstanceConfig.SelectedIndex;
             };
 
 			// DirListSortKind
 			onLoad += () =>
 			{
-				_windowRef.ConfigRecord.DirListSort.Selected = _userData.SortKind;
+				windowRef.ConfigRecord.DirListSort.Selected = userData.SortKind;
 			};
 			onSave += () =>
 			{
-				_userData.SortKind = _windowRef.ConfigRecord.DirListSort.Selected;
+				userData.SortKind = windowRef.ConfigRecord.DirListSort.Selected;
 			};
         }
 	}

@@ -17,24 +17,24 @@
     <Grid>
         <StackPanel Orientation="Horizontal">
 
-            <TextBlock Text="インスタンス: " VerticalAlignment="Center" Margin="{StaticResource BaseMargin}"/>
+            <TextBlock Text="インスタンス: " VerticalAlignment="Center" Margin="{StaticResource Margin_5_5}"/>
 
-            <Grid Width="250" Margin="{StaticResource BaseMargin}">
+            <Grid Width="250" Margin="{StaticResource Margin_5_5}">
                 <local:ConfigComboBox x:Name="viewComboBox" TextVisibility="Collapsed" VerticalAlignment="Center"/>
             </Grid>
 
             <Button 
-                    Width="50" Style="{StaticResource DarkFlatButton}" x:Name="buttonRemoveDataInstance" Margin="{StaticResource BaseMargin}"
+                    Width="50" Style="{StaticResource DarkFlatButton}" x:Name="buttonRemoveDataInstance" Margin="{StaticResource Margin_0_5}"
                     Content="削除" 
                     Click="buttonRemoveDataInstance_Click"/>
 
             <Button 
-                    Width="100" Style="{StaticResource DarkFlatButton}" x:Name="buttonAddNewDataInstance" Margin="{StaticResource BaseMargin}"
+                    Width="100" Style="{StaticResource DarkFlatButton}" x:Name="buttonAddNewDataInstance" Margin="{StaticResource Margin_0_5}"
                     Content="新規作成" 
                     Click="buttonAddNewDataInstance_Click"/>
 
             <Button 
-                    Width="100" Style="{StaticResource DarkFlatButton}" x:Name="buttonRenameDataInstance" Margin="{StaticResource BaseMargin}"
+                    Width="100" Style="{StaticResource DarkFlatButton}" x:Name="buttonRenameDataInstance" Margin="{StaticResource Margin_0_5}"
                     Content="名前の変更" 
                     Click="buttonRenameDataInstance_Click"/>
 
