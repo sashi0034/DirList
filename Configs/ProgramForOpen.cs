@@ -11,10 +11,18 @@ namespace DirList.Configs
 {
     public enum ProgramForOpenKind
     {
+        [Description("[ 以前の開き方 ]")]
+        Default,
+
         [Description("Explorer")]
         Expolorer,
+        
         [Description("Visual Studio Code")]
         Code,
+
+        [Description("Visual Studio Code [ WSL ]")]
+        CodeAsWsl,
+
     }
 
     public record struct ProgramForOpenProcessStartInfo(
@@ -32,16 +40,6 @@ namespace DirList.Configs
             _view = view;
         }
         public ProgramForOpenKind Selected => _view.GetSelectedIndex<ProgramForOpenKind>();
-
-        public ProgramForOpenProcessStartInfo GetInfoToExecute()
-        {
-            switch (Selected)
-            {
-                case ProgramForOpenKind.Expolorer: return new(false, "explorer.exe");
-                case ProgramForOpenKind.Code: return new(true, "code");
-            }
-            throw new NotImplementedException();
-        }
 
     }
 }

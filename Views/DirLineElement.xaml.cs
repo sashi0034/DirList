@@ -56,8 +56,33 @@ namespace DirList.Views
 
         private void buttonDir_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
-            var configInfo = _configRecord.ProgramForOpen.GetInfoToExecute();
+            var settingProgramForOpen = Dir.ProgramForOpen != ProgramForOpenKind.Default
+                ? Dir.ProgramForOpen
+                : _configRecord.ProgramForOpen.Selected;
 
+            switch (settingProgramForOpen)
+            {
+                case ProgramForOpenKind.Default:
+                case ProgramForOpenKind.Expolorer:
+                    openDirByRunProcess(new(false, ConstParam.NameExploler));
+                    break;
+                case ProgramForOpenKind.Code:
+                    openDirByRunProcess(new(true, ConstParam.CommandOpenCode));
+                    break;
+                case ProgramForOpenKind.CodeAsWsl:
+                    openDirByCodeAsWsl();
+                    break;
+                default:
+                    throw new NotImplementedException();
+            }
+
+            // 設定を覚えておく
+            Dir.ProgramForOpen = settingProgramForOpen;
+
+        }
+
+        private void openDirByRunProcess(ProgramForOpenProcessStartInfo configInfo)
+        {
             ProcessStartInfo processStartInfo = new ProcessStartInfo
             {
                 UseShellExecute = configInfo.UseShellExecute,
@@ -69,11 +94,31 @@ namespace DirList.Views
             try
             {
                 Process.Start(processStartInfo);
-            }catch (Exception ex)
+            }
+            catch (Exception ex)
             {
                 MessageBox.Show(ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
-            
+        }
+
+        private void openDirByCodeAsWsl()
+        {
+            ProcessStartInfo processStartInfo = new ProcessStartInfo
+            {
+                UseShellExecute = true,
+                FileName = ConstParam.CommandOpenWsl,
+                Arguments = $"{ConstParam.CommandOpenCode} $(wslpath -u '{Dir.Path}')",
+                WindowStyle = ProcessWindowStyle.Hidden
+            };
+
+            try
+            {
+                Process.Start(processStartInfo);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
         }
 
         private void buttonCopyToClipboard_Click(object sender, RoutedEventArgs e)

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DirList.Configs;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -19,6 +20,7 @@ namespace DirList
         public string Path { get; set; } = "";
         public string PushedTime { get; set; } = "";
         public bool HasPushedTime => PushedTime != "";
+        public ProgramForOpenKind ProgramForOpen = ProgramForOpenKind.Default;
 
         public DirPath()
         { }

@@ -22,7 +22,7 @@ namespace DirList
             // ミューテックスの所有権を要求
             if (!mutex.WaitOne(0, false))
             {
-                MessageBox.Show("このアプリケーションは多重起動出来ません。");
+                // MessageBox.Show("このアプリケーションは多重起動出来ません。");
                 Shutdown();
             }
         }
