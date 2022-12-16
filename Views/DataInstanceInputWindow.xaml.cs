@@ -24,6 +24,13 @@ namespace DirList.Views
         {
             InitializeComponent();
             _isValidInput = isValidInput;
+            inputBox.Focus();
+
+            this.Dispatcher.InvokeAsync(async () => 
+                { 
+                    await Task.Delay(0);
+                    inputBox.SelectAll(); 
+                });
         }
 
         public bool IsConfirmed { get; private set; }
@@ -42,6 +49,11 @@ namespace DirList.Views
 
         private void buttonConfirm_Click(object sender, RoutedEventArgs e)
         {
+            confirmAndExit();
+        }
+
+        private void confirmAndExit()
+        {
             IsConfirmed = true;
             Close();
         }
@@ -59,6 +71,18 @@ namespace DirList.Views
                 buttonConfirm.IsEnabled = false;
                 buttonConfirm.Opacity = 0.5;
                 infoLabel.ShowMessage(new InfoLabelMessage("他の名前にしてください。", Brushes.LightPink));
+            }
+        }
+
+        private void inputBox_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Enter)
+            {
+                confirmAndExit();
+            }
+            else if (e.Key == Key.Escape)
+            {
+                Close();
             }
         }
     }

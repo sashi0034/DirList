@@ -23,6 +23,7 @@
                 x:Name="inputBox" Grid.Column="0" Margin="{StaticResource Margin_10_10}" Width="200" Height="30" VerticalContentAlignment="Center" 
                 Foreground="White" Background="{StaticResource DrakDark}" BorderBrush="{StaticResource LightDark}"
                 Text="" Padding="5 0 0 0" TextChanged="inputBox_TextChanged"
+                KeyDown="inputBox_KeyDown"
             />
             <local:InfoLabel x:Name="infoLabel" HorizontalAlignment="Center"/>
             <Button 
