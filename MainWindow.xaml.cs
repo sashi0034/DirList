@@ -34,12 +34,15 @@ namespace DirList
                 new OptionOnCopy(viewOptionOnCopy),
                 new ProgramForOpen(viewProgramForOpen),
                 new DirListSort(viewDirlistSort, dirListPanel),
-                new DirListDataInstanceConfig(dataInstanceView, dirListPanel)
+                new DirListDataInstanceConfig(dataInstanceView, dirListPanel, tabSwitchPanel)
                 );
 
             dirListPanel.RegisterConfig(_configRecord);
 
-            _userDataLinker = UserDataLinker.LoadUserData(new MainWindowInfo(_configRecord, dirListPanel));
+            _userDataLinker = UserDataLinker.LoadUserData(new MainWindowInfo(
+                _configRecord, 
+                dirListPanel,
+                tabSwitchPanel));
         }
 
 

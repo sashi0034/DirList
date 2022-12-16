@@ -10,12 +10,34 @@ using System.Xml.Serialization;
 
 namespace DirList
 {
+    public class DirListDataInstance
+    {
+        public string InstanceName { get; set; } = "";
+        public List<DirPath> DirPathList { get; set; } = new();
+
+        public DirListDataInstance() { }
+
+        public DirListDataInstance(string instanceName)
+        {
+            InstanceName = instanceName;
+        }
+    }
+
+    public class TabData
+    {
+        public TabData() { }
+        public List<string> TabNames { get; set; } = new();
+        public int CurrentIndex = 0;
+    }
+
+
     public class UserData
     {
         public UserData() { }
         public List<DirListDataInstance> DataInstanceList { get; set; } = new();
         public int DataInstanceSelectedIndex { get; set; } = 0;
         public Configs.DirListSortKind SortKind { get; set; }
+        public TabData TabData { get; set; }
 
 
         private const string DataPath = @"UserData.xml";

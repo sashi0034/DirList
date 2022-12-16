@@ -7,7 +7,8 @@ namespace DirList
 {
 	public record class MainWindowInfo(
 		Configs.ConfigRecord ConfigRecord,
-		DirListPanel DirListPanel)
+		DirListPanel DirListPanel,
+		TabSwitchPanel TabSwitchPanel)
 	{ }
 
 	public class UserDataLinker
@@ -68,6 +69,16 @@ namespace DirList
 			onSave += () =>
 			{
 				userData.SortKind = windowRef.ConfigRecord.DirListSort.Selected;
+			};
+
+			// TabSwitchPanel
+			onLoad += () =>
+			{
+				windowRef.TabSwitchPanel.Setup(userData.TabData, windowRef.ConfigRecord.DirListDataInstanceConfig);
+			};
+			onSave += () =>
+			{
+				userData.TabData = windowRef.TabSwitchPanel.Save();
 			};
         }
 	}

@@ -57,8 +57,8 @@
     </Style>
 
     <Style TargetType="Button" x:Key="DarkFlatButton">
-        <Setter Property="BorderBrush" Value="{StaticResource NormalDark}"/>
-        <Setter Property="Background" Value="{StaticResource NormalDark}"/>
+        <Setter Property="BorderBrush" Value="Transparent"/>
+        <Setter Property="Background" Value="Transparent"/>
         <Setter Property="Foreground" Value="#eef"/>
         <Setter Property="Height" Value="Auto"/>
         <Setter Property="Padding" Value="5"/>

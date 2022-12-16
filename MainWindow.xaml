@@ -21,8 +21,8 @@
             <RowDefinition Height="40"/>
             <RowDefinition Height="1*"/>
         </Grid.RowDefinitions>
-        <Grid Background="{StaticResource DrakDark}" Grid.Row="0">
-            <views:TabSwitchPanel/>
+        <Grid Background="{StaticResource DrakDark}" Grid.Row="0" Margin="0 0 0 1">
+            <views:TabSwitchPanel x:Name="tabSwitchPanel"/>
         </Grid>
         <Grid Margin="{StaticResource Margin_5_5}" Grid.Row="1">
             <Grid.RowDefinitions>

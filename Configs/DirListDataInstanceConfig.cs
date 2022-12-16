@@ -15,18 +15,20 @@ namespace DirList.Configs
 {
     public class DirListDataInstanceConfig
     {
-        private readonly BindingComboBox _instanceItemList;
-        public int SelectedIndex => _instanceItemList.Selected;
-        private readonly Views.DirListPanel _dirListPanel;
+        private readonly BindingComboBox instanceItemList;
+        public int SelectedIndex => instanceItemList.Selected;
+        private readonly Views.DirListPanel dirListPanel;
+        private readonly Views.TabSwitchPanel tabSwitchPanel;
         public List<DirListDataInstance> DataInstanceList { get; private set; } = new();
 
-        private Window parentWIndow => Window.GetWindow(_dirListPanel);
+        private Window parentWIndow => Window.GetWindow(dirListPanel);
         private int _oldSelectedIndex = 0;
 
-        public DirListDataInstanceConfig(Views.DataInstanceView view, Views.DirListPanel dirListPanel)
+        public DirListDataInstanceConfig(Views.DataInstanceView view, Views.DirListPanel dirListPanel, Views.TabSwitchPanel tabSwitchPanel)
         {
-            _instanceItemList = new BindingComboBox(view.ComboBox);
-            _dirListPanel = dirListPanel;
+            instanceItemList = new BindingComboBox(view.ComboBox);
+            this.dirListPanel = dirListPanel;
+            this.tabSwitchPanel = tabSwitchPanel;
 
             initDefaultInstance();
 
@@ -35,6 +37,11 @@ namespace DirList.Configs
             view.OnPushAdd += onPushAddNewInstance;
             view.OnPushRemove += onPushRemoveInstance;
             view.OnPushRename += onPushRenameInstance;
+
+            tabSwitchPanel.OnChangeTab += (tabName) => 
+            {
+                instanceItemList.ChangeSelected(instanceItemList.FindIndexOf(tabName));
+            };
         }
 
         private void initDefaultInstance()
@@ -46,10 +53,11 @@ namespace DirList.Configs
 
         private void onSelect()
         {
-            int newSelectedIndex = _instanceItemList.Selected;
+            int newSelectedIndex = instanceItemList.Selected;
             if (newSelectedIndex == -1) return;
             if (_oldSelectedIndex!=-1) readFromPanel(_oldSelectedIndex);
             WriteToPanel();
+            tabSwitchPanel.ChangeCurrentTabName(DataInstanceList[instanceItemList.Selected].InstanceName);
             _oldSelectedIndex = newSelectedIndex;
         }
 
@@ -64,7 +72,7 @@ namespace DirList.Configs
 
         private void changeSelect(int index)
         {
-            _instanceItemList.ChangeSelected(index);
+            instanceItemList.ChangeSelected(index);
             WriteToPanel();
         }
 
@@ -74,8 +82,8 @@ namespace DirList.Configs
 
         public void WriteToPanel()
         {
-            if (_instanceItemList.Selected == -1) return;
-            _dirListPanel.ResetBy(DataInstanceList[_instanceItemList.Selected].DirPathList);
+            if (instanceItemList.Selected == -1) return;
+            dirListPanel.ResetBy(DataInstanceList[instanceItemList.Selected].DirPathList);
         }
 
         /// <summary>
@@ -83,12 +91,12 @@ namespace DirList.Configs
         /// </summary>
         public void ReadFromPanel()
         {
-            readFromPanel(_instanceItemList.Selected);
+            readFromPanel(instanceItemList.Selected);
         }
         private void readFromPanel(int index)
         {
             if (index == -1) return;
-            DataInstanceList[index].DirPathList = _dirListPanel.GetDirList();
+            DataInstanceList[index].DirPathList = dirListPanel.GetDirList();
         }
 
         private void onPushAddNewInstance()
@@ -110,17 +118,17 @@ namespace DirList.Configs
         {
             return 
                 input!="" &&
-                _instanceItemList.ItemList.Contains(input) == false;
+                instanceItemList.ItemList.Contains(input) == false;
         }
 
         private string getNextDefaultInstanceName()
         {
-            return "Instance " + (_instanceItemList.ItemList.Count + 1);
+            return "Instance " + (instanceItemList.ItemList.Count + 1);
         }
 
         private void onPushRemoveInstance()
         {
-            if (_instanceItemList.ItemList.Count == 1)
+            if (instanceItemList.ItemList.Count == 1)
             {
                 MessageBox.Show("これ以上削除することはできません", "警告", MessageBoxButton.OK, MessageBoxImage.Warning);
                 return;
@@ -129,16 +137,21 @@ namespace DirList.Configs
             if (!Keyboard.IsKeyDown(Key.LeftCtrl) &&
                 showAndConfirmRemoveDialog() != MessageBoxResult.OK) return;
 
-            int selectedIndex = _instanceItemList.Selected;
-            if (selectedIndex == _instanceItemList.ItemList.Count - 1) _instanceItemList.ChangeSelected(_instanceItemList.Selected-1);
+            int selectedIndex = instanceItemList.Selected;
+            string selectedName = instanceItemList.ItemList[selectedIndex];
+
+            if (selectedIndex == instanceItemList.ItemList.Count - 1) instanceItemList.ChangeSelected(instanceItemList.Selected - 1);
+            
             removeInstance(selectedIndex);
+            
+            tabSwitchPanel.RemoveByName(selectedName, instanceItemList.CurrentSelectedItem);
         }
 
 
         private MessageBoxResult showAndConfirmRemoveDialog()
         {
             var result = MessageBox.Show(
-                _instanceItemList.CurrentSelectedItem + " を削除しますか?\n( Ctrlを押しながら`削除'を押すと、このダイアログをスキップします )",
+                instanceItemList.CurrentSelectedItem + " を削除しますか?\n( Ctrlを押しながら`削除'を押すと、このダイアログをスキップします )",
                 "確認",
                 MessageBoxButton.OKCancel,
                 MessageBoxImage.Question, MessageBoxResult.Cancel);
@@ -148,8 +161,8 @@ namespace DirList.Configs
 
         private void onPushRenameInstance()
         {
-            int selectedIndex = _instanceItemList.Selected;
-            string oldName = _instanceItemList.ItemList[selectedIndex];
+            int selectedIndex = instanceItemList.Selected;
+            string oldName = instanceItemList.ItemList[selectedIndex];
             var inputWIndow = new Views.DataInstanceInputWindow(newName => { return newName == oldName || isValidInput(newName); });
             inputWIndow.Owner = parentWIndow;
             inputWIndow.SetWindowLeftTopTo(parentWIndow);
@@ -157,16 +170,18 @@ namespace DirList.Configs
             inputWIndow.ShowBeforeName(oldName);
             inputWIndow.ShowDialog();
 
-
             if (!inputWIndow.IsConfirmed) return;
 
-            renameDataInstance(selectedIndex, inputWIndow.InputText);
+            var newName = inputWIndow.InputText;
+            renameDataInstance(selectedIndex, newName);
+
+            tabSwitchPanel.ReanameAll(oldName, newName);
         }
 
         private void resetDataInstance(List<DirListDataInstance> dataInstanceList)
         {
             DataInstanceList = dataInstanceList;
-            _instanceItemList.ResetItemList(
+            instanceItemList.ResetItemList(
                 dataInstanceList
                 .Select(list => list.InstanceName)
                 .ToList());
@@ -175,18 +190,18 @@ namespace DirList.Configs
         private void addNewDataInstance(string newInstanceName)
         {
             DataInstanceList.Add(new DirListDataInstance(newInstanceName));
-            _instanceItemList.UpdateItemList(list => list.Add(newInstanceName));
+            instanceItemList.UpdateItemList(list => list.Add(newInstanceName));
         }
 
         private void renameDataInstance(int selectedIndex, string newName)
         {
             DataInstanceList[selectedIndex].InstanceName = newName;
-            _instanceItemList.UpdateItemList(list => list[selectedIndex] = newName);
+            instanceItemList.UpdateItemList(list => list[selectedIndex] = newName);
         }
         private void removeInstance(int selectedIndex)
         {
             DataInstanceList.RemoveAt(selectedIndex);
-            _instanceItemList.UpdateItemList(list => list.RemoveAt(selectedIndex));
+            instanceItemList.UpdateItemList(list => list.RemoveAt(selectedIndex));
         }
 
     }

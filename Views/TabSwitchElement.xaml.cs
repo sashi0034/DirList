@@ -22,10 +22,11 @@ namespace DirList.Views
     {
         public readonly Brush initialBg;
 
-        public TabSwitchElement()
+        public TabSwitchElement(string titleName)
         {
             InitializeComponent();
             initialBg = border.Background;
+            TitleName = titleName;
         }
 
 
@@ -39,5 +40,22 @@ namespace DirList.Views
                     : Brushes.Transparent;
             }
         }
+
+        public string TitleName 
+        { 
+            get => (string)label.Content;
+            set => label.Content = value;
+        }
+
+        public void AddEventOnClickTab(MouseButtonEventHandler e)
+        {
+            tabRoot.MouseDown += e;
+        }
+
+        public void AddEventOnButtonClose(RoutedEventHandler e)
+        {
+            buttonClose.Click += e;
+        }
+
     }
 }

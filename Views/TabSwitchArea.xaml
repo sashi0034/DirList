@@ -15,9 +15,10 @@
     </UserControl.Resources>
 
     <StackPanel Orientation="Horizontal">
-        <local:TabSwitchElement IsActive="True"/>
-        <local:TabSwitchElement IsActive="False"/>
-        <local:TabSwitchElement IsActive="False"/>
+        <StackPanel x:Name="stackTabs" Orientation="Horizontal" Margin="{StaticResource Margin_5_0}">
+            <!--<local:TabSwitchElement IsActive="True"/>-->
+        </StackPanel>
+        <Button x:Name="buttonAdd" Content="➕" Style="{StaticResource DarkFlatButton}" Click="buttonAdd_Click"/>
     </StackPanel>
 
 </UserControl>

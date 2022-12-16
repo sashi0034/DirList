@@ -18,6 +18,11 @@ namespace DirList.Configs.Util
         }
         public IReadOnlyList<string> ItemList => _itemList;
 
+        public int FindIndexOf(string name)
+        {
+            return _itemList.IndexOf(name);
+        }
+
         public void UpdateItemList(Action<List<string>> func)
         {
             int selected = Selected;

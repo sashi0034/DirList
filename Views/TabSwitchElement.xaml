@@ -13,7 +13,7 @@
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </UserControl.Resources>
-    <Grid>
+    <Grid x:Name="tabRoot">
         <StackPanel Orientation="Horizontal">
             <Border 
                 x:Name="border"
@@ -23,10 +23,12 @@
                 Padding="5" 
                 CornerRadius="10 10 0 0">
                 <StackPanel Orientation="Horizontal">
-                    <Label Content="Tab 1" 
+                    <Label 
+                       x:Name="label" 
+                       Content="Tab" 
                        Width="100"
                        Background="Transparent" Foreground="White"/>
-                    <Label Content="❌" Background="Transparent" Foreground="White"/>
+                    <Button x:Name="buttonClose" Content="❌" Style="{StaticResource DarkFlatButton}"/>
                 </StackPanel>
             </Border>
         </StackPanel>
