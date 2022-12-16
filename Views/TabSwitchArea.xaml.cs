@@ -41,7 +41,8 @@ namespace DirList.Views
             {
                 addNewTab(tab);
             }
-            changeTabIndex(dataInstanceConfig.SelectedIndex);
+
+            changeTabIndex(tabData != null ? tabData.CurrentIndex : 0);
         }
 
         public TabData Save()
