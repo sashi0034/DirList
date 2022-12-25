@@ -25,6 +25,8 @@ namespace DirList
     {
         private readonly ConfigRecord _configRecord;
         private readonly UserDataLinker _userDataLinker;
+        private bool _isClosed = false;
+        private const int backgroundSaveDuration = 30 * 60 * 1000; // 30 minutes
 
         public MainWindow()
         {
@@ -43,8 +45,24 @@ namespace DirList
                 _configRecord, 
                 dirListPanel,
                 tabSwitchPanel));
+
+            this.Dispatcher.Invoke(saveDataAsBackgroundAsync);
         }
 
+        private async Task saveDataAsBackgroundAsync()
+        {
+            while (_isClosed == false)
+            {
+                textSaveDataAsBackground.Visibility = Visibility.Collapsed;
+
+                await Task.Delay(backgroundSaveDuration);
+
+                _userDataLinker.SaveUserData();
+                textSaveDataAsBackground.Visibility = Visibility.Visible;
+
+                await Task.Delay(1000 * 3);
+            }
+        }
 
         private void dirPathInput_onConfirm(DirPath path)
         {
@@ -54,6 +72,7 @@ namespace DirList
         private void window_Closed(object sender, EventArgs e)
         {
             _userDataLinker.SaveUserData();
+            _isClosed = true;
         }
     }
 }

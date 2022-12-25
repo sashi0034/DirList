@@ -40,10 +40,10 @@ namespace DirList
         public TabData TabData { get; set; }
 
 
-        private const string DataPath = @"UserData.xml";
+        
 
 
-        public void WriteSelf()
+        public void WriteSelf(string dataPath)
         {
             System.Xml.Serialization.XmlSerializer serializer = new System.Xml.Serialization.XmlSerializer(typeof(UserData));
 
@@ -52,19 +52,19 @@ namespace DirList
             xmlSettings.IndentChars = ("\t");
             xmlSettings.Encoding = new System.Text.UTF8Encoding(false);
 
-            using (var sw = new System.IO.StreamWriter(DataPath, false, new System.Text.UTF8Encoding(false)))
+            using (var sw = new System.IO.StreamWriter(dataPath, false, new System.Text.UTF8Encoding(false)))
             using (var xmlWriter = XmlWriter.Create(sw, xmlSettings))
             {
                 serializer.Serialize(xmlWriter, this);
             }
         }
-        public static UserData? ReadFromFile()
+        public static UserData? ReadFromFile(string dataPath)
         {
             UserData? result = null;
 
             try
             {
-                using (StreamReader sr = new StreamReader(DataPath))
+                using (StreamReader sr = new StreamReader(dataPath))
                 {
                     XmlSerializer serializer = new XmlSerializer(typeof(UserData));
                     result = serializer.Deserialize(sr) as UserData;

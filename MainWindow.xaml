@@ -37,7 +37,10 @@
             </Grid>
 
             <Grid Grid.Row="1">
-                <TextBlock Margin="10 5" Text="フォルダを追加したら、ダブルクリックで開けます。" VerticalAlignment="Center"/>
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock Margin="10 5" Text="フォルダを追加したら、ダブルクリックで開けます。" VerticalAlignment="Center"/>
+                    <TextBlock x:Name="textSaveDataAsBackground" Margin="10 5" Text="バックグラウンドでデータを保存しました。" VerticalAlignment="Center" Foreground="Yellow"/>
+                </StackPanel>
                 <Grid HorizontalAlignment="Right" Width="150" Margin="10 5">
                     <views:ConfigComboBox x:Name="viewDirlistSort" TextVisibility="Collapsed"/>
                 </Grid>
